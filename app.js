@@ -14,7 +14,7 @@ function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(getData(accessToken));
+        console.log(getPlaylistItems(accessToken, "1Ev0Nv8kzmHEKinLAxKWqX"));
 
     }
 
@@ -55,11 +55,29 @@ function getAccessToken(location) {
 }
 //#endregion
 
-async function getData(accessToken) {
-    let data = await fetch("https://api.spotify.com/v1/playlists/1Ev0Nv8kzmHEKinLAxKWqX/tracks", {
-        method: "GET",
+class Track {
+    constructor(name, uri, album, artists) {
+        this.name = name;
+        this.uri = uri;
+        this.album = album;
+        this.artists = artists;
+    }
+}
+
+function getPlaylistItems(accessToken, id) {
+    let url = "https://api.spotify.com/v1/playlists/" + id + "/tracks";
+    let query = "?fields=items.track"
+    url += query
+    spotify(accessToken, "GET", url)
+}
+
+async function spotify(accessToken, method, url) {
+    let data = await fetch(url, {
+        method: method,
         headers: {Authorization: accessToken.tokenType + " " + accessToken.accessToken}
     });
 
-    console.log(await data.json())
+    data = await data.json()
+
+    console.log(data)
 }
