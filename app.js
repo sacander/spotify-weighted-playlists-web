@@ -5,7 +5,7 @@ const scope = null; // Scopes to access spotify api
 //#endregion
 
 //#region Main function of file
-function app(){ 
+async function app(){ 
 
     if (window.location.hash.length == 0) { // Check if url has no #, used to check if this is a url returned from spotify
 
@@ -14,7 +14,7 @@ function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(getPlaylistItems(accessToken, "1Ev0Nv8kzmHEKinLAxKWqX"));
+        console.log(await getPlaylistItems(accessToken, "1Ev0Nv8kzmHEKinLAxKWqX"));
 
     }
 
@@ -55,6 +55,7 @@ function getAccessToken(location) {
 }
 //#endregion
 
+// Track class for easy data management
 class Track {
     constructor(name, uri, album, artists) {
         this.name = name;
@@ -64,20 +65,37 @@ class Track {
     }
 }
 
-function getPlaylistItems(accessToken, id) {
-    let url = "https://api.spotify.com/v1/playlists/" + id + "/tracks";
-    let query = "?fields=items.track"
-    url += query
-    spotify(accessToken, "GET", url)
+// Returns list of custom track objects
+async function getPlaylistItems(accessToken, id) { // Gets data
+    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track";
+    const data = await spotify(accessToken, "GET", url);
+    const tracks = [];
+    
+    for (let track of data.items) { // Iterates through existing track objects
+        track = track.track; // data.items = [{track: {...}}, {track: {...}}, {track: {...}}...]
+        if (track != null) {
+            
+            const name = track.name; // Gets properties
+            const uri = track.uri;
+            const album = track.album.name;
+            const artists = [];
+            for (let artist of track.artists) {
+                artists.push(artist.name);
+            }
+
+            tracks.push(new Track(name, uri, album, artists)); // Creates custom track object
+
+        }
+    }
+
+    return tracks
 }
 
+// Sends or receives data to the Spotify Web API
 async function spotify(accessToken, method, url) {
-    let data = await fetch(url, {
+    const data = await fetch(url, {
         method: method,
         headers: {Authorization: accessToken.tokenType + " " + accessToken.accessToken}
     });
-
-    data = await data.json()
-
-    console.log(data)
+    return data.json();
 }
