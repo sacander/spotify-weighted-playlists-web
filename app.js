@@ -10,7 +10,7 @@ async function app(){
 
     if (window.location.hash.length == 0) { // Check if url has no #, used to check if this is a url returned from spotify
 
-        window.location.href = authorize(clientId, redirectUrl, scope); // Change url to authorize with spotify api
+        window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
 
     } else {
         
@@ -25,7 +25,7 @@ async function app(){
 
 //#region Authorization Flow - Implicit Grant
 // Returns url to authorize with spotify api
-function authorize(clientId, redirectUrl, scope) {
+function getAuthorizeUrl(clientId, redirectUrl, scope) {
     let authorizeUrl = "https://accounts.spotify.com/authorize";
     authorizeUrl += "?client_id=" + clientId;
     authorizeUrl += "&response_type=" + "token";
