@@ -15,7 +15,7 @@ async function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(await getPlaylistItemsBypass100(accessToken, document.getElementById("playlistId").innerHTML));
+        console.log(await getPlaylistItemsBypass100(accessToken, document.getElementById("inputPlaylistId").innerHTML));
 
     }
 
