@@ -23,8 +23,8 @@ function countdownTimer(){
 }
 
 // Takens text input of playlist url and converts it to playlist id
-function getInputPlaylist() {
-    let url = new URL(document.getElementById("inputPlaylistUrl").value);
+function getPlaylistId(io) {
+    let url = new URL(document.getElementById(io + "PlaylistUrl").value);
     url = url.pathname.replace("/playlist/", "");
-    document.getElementById("inputPlaylistId").innerHTML = url;
+    document.getElementById(io + "PlaylistId").innerHTML = url;
 }
