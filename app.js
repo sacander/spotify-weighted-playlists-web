@@ -14,7 +14,7 @@ async function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(await getPlaylistItems(accessToken, "1Ev0Nv8kzmHEKinLAxKWqX"));
+        console.log(await getPlaylistItems(accessToken, document.getElementById("playlistId").innerHTML));
 
     }
 

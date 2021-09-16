@@ -21,3 +21,10 @@ function countdownTimer(){
         }, 1000);
     }
 }
+
+// Takens text input of playlist url and converts it to playlist id
+function getInputPlaylist() {
+    let url = new URL(document.getElementById("playlistUrl").value);
+    url = url.pathname.replace("/playlist/", "");
+    document.getElementById("playlistId").innerHTML = url;
+}
