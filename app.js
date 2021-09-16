@@ -4,6 +4,7 @@ const redirectUrl="http://localhost:8000/"; // Spotify app redirect url
 const scope = null; // Scopes to access spotify api
 //#endregion
 
+
 //#region Main function of file
 async function app(){ 
 
@@ -20,6 +21,7 @@ async function app(){
 
 }
 //#endregion
+
 
 //#region Authorization Flow - Implicit Grant
 // Returns url to authorize with spotify api
@@ -55,6 +57,8 @@ function getAccessToken(location) {
 }
 //#endregion
 
+
+//#region Import Data to Custom Track Object List
 // Track class for easy data management
 class Track {
     constructor(name, uri, album, artists) {
@@ -67,7 +71,7 @@ class Track {
 
 // Returns list of custom track objects
 async function getPlaylistItems(accessToken, id, offset=0) { // Gets data with 100 track limit
-    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track,total" + "&offset=" + offset;
+    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track" + "&offset=" + offset;
     const data = await spotify(accessToken, "GET", url);
     const tracks = [];
     
@@ -91,10 +95,11 @@ async function getPlaylistItems(accessToken, id, offset=0) { // Gets data with 1
     return tracks
 }
 
+// Returns list of custom track objects, bypassing 100 tracks limit
 async function getPlaylistItemsBypass100(accessToken, id) {
-    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track,total";
+    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=total";
     const data = await spotify(accessToken, "GET", url);
-    const numOfSublists = Math.ceil(data.total / 100);
+    const numOfSublists = Math.ceil(data.total / 100); // Find number of required sublists of length 100
     let tracks = [];
 
     for (let i = 0; i < numOfSublists; i++) {
@@ -110,5 +115,12 @@ async function spotify(accessToken, method, url) {
         method: method,
         headers: {Authorization: accessToken.tokenType + " " + accessToken.accessToken}
     });
-    return data.json();
+
+    if (data.ok) {
+        return data.json();
+    } else {
+        console.log("There was an error. Response Status " + data.status);
+    }
+    
 }
+//#endregion
