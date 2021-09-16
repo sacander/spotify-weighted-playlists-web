@@ -70,8 +70,8 @@ class Track {
 }
 
 // Returns list of custom track objects
-async function getPlaylistItems(accessToken, id, offset=0) { // Gets data with 100 track limit
-    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track" + "&offset=" + offset;
+async function getPlaylistItems(accessToken, playlistId, offset=0) { // Gets data with 100 track limit
+    const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=items.track" + "&offset=" + offset;
     const data = await spotify(accessToken, "GET", url);
     const tracks = [];
     
@@ -96,14 +96,14 @@ async function getPlaylistItems(accessToken, id, offset=0) { // Gets data with 1
 }
 
 // Returns list of custom track objects, bypassing 100 tracks limit
-async function getPlaylistItemsBypass100(accessToken, id) {
-    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=total";
+async function getPlaylistItemsBypass100(accessToken, playlistId) {
+    const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=total";
     const data = await spotify(accessToken, "GET", url);
     const numOfSublists = Math.ceil(data.total / 100); // Find number of required sublists of length 100
     let tracks = [];
 
     for (let i = 0; i < numOfSublists; i++) {
-        tracks = tracks.concat(await getPlaylistItems(accessToken, id, i*100));
+        tracks = tracks.concat(await getPlaylistItems(accessToken, playlistId, i*100));
     }
 
     return tracks;
@@ -122,5 +122,12 @@ async function spotify(accessToken, method, url) {
         console.log("There was an error. Response Status " + data.status);
     }
     
+}
+//#endregion
+
+
+//#region Output Data to Playlist
+function replacePlaylist() {
+
 }
 //#endregion
