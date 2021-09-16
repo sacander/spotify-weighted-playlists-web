@@ -14,7 +14,7 @@ async function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(await getPlaylistItems(accessToken, document.getElementById("playlistId").innerHTML));
+        console.log(await getPlaylistItemsBypass100(accessToken, document.getElementById("playlistId").innerHTML));
 
     }
 
@@ -66,8 +66,8 @@ class Track {
 }
 
 // Returns list of custom track objects
-async function getPlaylistItems(accessToken, id) { // Gets data
-    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track";
+async function getPlaylistItems(accessToken, id, offset=0) { // Gets data with 100 track limit
+    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track,total" + "&offset=" + offset;
     const data = await spotify(accessToken, "GET", url);
     const tracks = [];
     
@@ -89,6 +89,19 @@ async function getPlaylistItems(accessToken, id) { // Gets data
     }
 
     return tracks
+}
+
+async function getPlaylistItemsBypass100(accessToken, id) {
+    const url = "https://api.spotify.com/v1/playlists/" + id + "/tracks?fields=items.track,total";
+    const data = await spotify(accessToken, "GET", url);
+    const numOfSublists = Math.ceil(data.total / 100);
+    let tracks = [];
+
+    for (let i = 0; i < numOfSublists; i++) {
+        tracks = tracks.concat(await getPlaylistItems(accessToken, id, i*100));
+    }
+
+    return tracks;
 }
 
 // Sends or receives data to the Spotify Web API
