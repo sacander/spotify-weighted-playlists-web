@@ -11,11 +11,9 @@
     <button type="button" onclick="app()">Run app.js</button>
     <button type="button" onclick="test()">Run test.js</button>
     <p></p>
-    <form>
-        <label for="playlistUrl">Playlist URL:</label>
-        <input type="text" id="playlistUrl" name="playlistUrl" size="75" value="https://open.spotify.com/playlist/0LYnjF9LhawqR5IypBuOIi?si=48b24fbfeeff4bcb">
-        <input type="button" value="Submit" onclick="getInputPlaylist()">
-    </form>
+    <label for="playlistUrl">Playlist URL:</label>
+    <input type="text" id="playlistUrl" name="playlistUrl" size="75" value="https://open.spotify.com/playlist/0LYnjF9LhawqR5IypBuOIi?si=48b24fbfeeff4bcb">
+    <input type="button" value="Submit" onclick="getInputPlaylist()">
     <p>Playlist ID: <span id="playlistId"></span></p>
     <p id="accessTokenExpiresIn"></p>
 </body>
