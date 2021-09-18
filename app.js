@@ -1,7 +1,29 @@
 //#region Global Constants
 const clientId="56c1bd9731fc4880988e268fe1e85eec"; // Spotify app client id
 const redirectUrl="http://localhost:8000/"; // Spotify app redirect url
-const scope = null; // Scopes to access spotify api
+const scope = "playlist-modify-public playlist-modify-private"; // Scopes to access spotify api
+//#endregion
+
+
+//#region Sends or receives data to the Spotify Web API
+async function spotify(accessToken, method, url, body=null, contentType=null) {
+    const data = await fetch(url, {
+        method: method,
+        headers: {
+            "Authorization": accessToken.tokenType + " " + accessToken.accessToken,
+            "Content-Type": contentType
+        },
+        body: body
+    });
+
+    if (data.ok) {
+        return data.json();
+    } else {
+        console.log("There was an error. Response Status " + data.status);
+        console.log(await data.json());
+    }
+    
+}
 //#endregion
 
 
@@ -15,7 +37,8 @@ async function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        console.log(await getPlaylistItemsBypass100(accessToken, document.getElementById("inputPlaylistId").innerHTML));
+        let x = await getPlaylistItemsBypass100(accessToken, document.getElementById("inputPlaylistId").innerHTML)
+        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, x)
 
     }
 
@@ -58,7 +81,7 @@ function getAccessToken(location) {
 //#endregion
 
 
-//#region Import Data to Custom Track Object List
+//#region Import Data to Custom Track Object Array
 // Track class for easy data management
 class Track {
     constructor(name, uri, album, artists) {
@@ -69,7 +92,7 @@ class Track {
     }
 }
 
-// Returns list of custom track objects
+// Returns array of custom track objects
 async function getPlaylistItems(accessToken, playlistId, offset=0) { // Gets data with 100 track limit
     const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=items.track" + "&offset=" + offset;
     const data = await spotify(accessToken, "GET", url);
@@ -95,39 +118,32 @@ async function getPlaylistItems(accessToken, playlistId, offset=0) { // Gets dat
     return tracks
 }
 
-// Returns list of custom track objects, bypassing 100 tracks limit
+// Returns array of custom track objects, bypassing 100 tracks limit
 async function getPlaylistItemsBypass100(accessToken, playlistId) {
     const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=total";
     const data = await spotify(accessToken, "GET", url);
-    const numOfSublists = Math.ceil(data.total / 100); // Find number of required sublists of length 100
+    const numOfSubarrays = Math.ceil(data.total / 100); // Find number of required subarrays of length 100
     let tracks = [];
 
-    for (let i = 0; i < numOfSublists; i++) {
+    for (let i = 0; i < numOfSubarrays; i++) {
         tracks = tracks.concat(await getPlaylistItems(accessToken, playlistId, i*100));
     }
 
     return tracks;
 }
-
-// Sends or receives data to the Spotify Web API
-async function spotify(accessToken, method, url) {
-    const data = await fetch(url, {
-        method: method,
-        headers: {Authorization: accessToken.tokenType + " " + accessToken.accessToken}
-    });
-
-    if (data.ok) {
-        return data.json();
-    } else {
-        console.log("There was an error. Response Status " + data.status);
-    }
-    
-}
 //#endregion
 
 
 //#region Output Data to Playlist
-function replacePlaylist() {
+async function replacePlaylist(accessToken, playlistId, trackArray) {
+    const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
+    const uriArray = {"uris": []};
+    await spotify(accessToken, "PUT", url, JSON.stringify(uriArray), "application/json");
 
+    while (trackArray.length > 0) {
+        uriArray.uris = trackArray.splice(0, 100);
+        uriArray.uris = uriArray.uris.map(track => track.uri);
+       await spotify(accessToken, "POST", url, JSON.stringify(uriArray), "application/json")
+    }
 }
 //#endregion
