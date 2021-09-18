@@ -37,8 +37,8 @@ async function app(){
     } else {
         
         const accessToken = getAccessToken(window.location);
-        let x = await getPlaylistItemsBypass100(accessToken, document.getElementById("inputPlaylistId").innerHTML)
-        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, x)
+        let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
+        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, tracks);
 
     }
 
@@ -93,10 +93,14 @@ class Track {
 }
 
 // Returns array of custom track objects
-async function getPlaylistItems(accessToken, playlistId, offset=0) { // Gets data with 100 track limit
-    const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=items.track" + "&offset=" + offset;
+async function getPlaylistItems(accessToken, playlistId, next=null, trackArray=[]) { // Gets data with 100 track limit
+    let url = next; // Assigns url to next page of tracks
+    if (url == null) {
+        url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=next,items.track"; // Assigns url during first call of function
+    }
+    
     const data = await spotify(accessToken, "GET", url);
-    const tracks = [];
+    const tracks = trackArray;
     
     for (let track of data.items) { // Iterates through existing track objects
         track = track.track; // data.items = [{track: {...}}, {track: {...}}, {track: {...}}...]
@@ -115,21 +119,11 @@ async function getPlaylistItems(accessToken, playlistId, offset=0) { // Gets dat
         }
     }
 
-    return tracks
-}
-
-// Returns array of custom track objects, bypassing 100 tracks limit
-async function getPlaylistItemsBypass100(accessToken, playlistId) {
-    const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=total";
-    const data = await spotify(accessToken, "GET", url);
-    const numOfSubarrays = Math.ceil(data.total / 100); // Find number of required subarrays of length 100
-    let tracks = [];
-
-    for (let i = 0; i < numOfSubarrays; i++) {
-        tracks = tracks.concat(await getPlaylistItems(accessToken, playlistId, i*100));
+    if (data.next == null) { // Calls itself if there are more pages of tracks
+        return tracks;
+    } else {
+        return getPlaylistItems(accessToken, playlistId, data.next, tracks);
     }
-
-    return tracks;
 }
 //#endregion
 
