@@ -38,7 +38,8 @@ async function app(){
         
         const accessToken = getAccessToken(window.location);
         let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
-        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, tracks);
+        let tracksByTaylorSwift = tracks.filter(filterByArtist("Taylor Swift"));
+        // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, tracks);
 
     }
 
@@ -141,3 +142,9 @@ async function replacePlaylist(accessToken, playlistId, trackArray) {
     }
 }
 //#endregion
+
+//#region Logic
+// Filters tracks by specific artist
+function filterByArtist(artist) {
+    return (track => {return track.artists.includes(artist)});
+}
