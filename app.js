@@ -40,6 +40,7 @@ async function app(){
         let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
         let tracksByTaylorSwift = tracks.filter(filterByArtist("Taylor Swift"));
         // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, tracks);
+        console.log(cumulativeProbabilities([2, 1, 3]));
 
     }
 
@@ -147,4 +148,21 @@ async function replacePlaylist(accessToken, playlistId, trackArray) {
 // Filters tracks by specific artist
 function filterByArtist(artist) {
     return (track => {return track.artists.includes(artist)});
+}
+
+// Takes an array of numbers, converts into relative probabilities, then makes it cumulative
+function cumulativeProbabilities(probabilityValues) { // Array of numbers
+    const cumulativeProbabilities = [0];
+
+    let sum = 0;
+    for (let i of probabilityValues) {
+        sum += i;
+    }
+
+    for (let i of probabilityValues) {
+        cumulativeProbabilities.push(i / sum + cumulativeProbabilities.at(-1)); // Finds probability of i and adds it to previous probability
+    }
+
+    cumulativeProbabilities.shift(); // Removes initial 0 in cumulativeProbabilities
+    return cumulativeProbabilities; // Returns array of numbers
 }
