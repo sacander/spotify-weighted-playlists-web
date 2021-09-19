@@ -38,10 +38,10 @@ async function app(){
         
         const accessToken = getAccessToken(window.location);
         let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
-        let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab")
-        let tracksByTaylorSwift = tracks.filter(filterByArtist("Taylor Swift"));
-        y = weightedTrackArray([tracks, x], [5, 1])
-        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y)
+        let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab");
+        let tracksByTaylorSwift = filterByArtist(tracks, "Taylor Swift");
+        y = weightedTrackArray([tracks, x], [5, 1]);
+        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
 
     }
 
@@ -147,8 +147,10 @@ async function replacePlaylist(accessToken, playlistId, trackArray) {
 
 //#region Logic
 // Filters tracks by specific artist
-function filterByArtist(artist) {
-    return (track => {return track.artists.includes(artist)});
+function filterByArtist(trackArray, artist) {
+    return trackArray.filter(track => {
+        return track.artists.includes(artist)
+    });
 }
 
 // Takes an array of numbers, converts into relative probabilities, then makes it cumulative
