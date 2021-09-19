@@ -145,6 +145,7 @@ async function replacePlaylist(accessToken, playlistId, trackArray) {
 }
 //#endregion
 
+
 //#region Logic
 // Filters tracks by specific artist
 function filterByArtist(trackArray, artist) {
@@ -203,3 +204,4 @@ function weightedTrackArray(trackArrays, probabilityValues) {
 
     return weightedTrackArray; // Returns array of custom track objects
 }
+//#endregion
