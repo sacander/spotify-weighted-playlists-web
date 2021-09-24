@@ -1,6 +1,35 @@
 * {
     font-family: "Verdana", "Arial", "sans-serif";
+    box-sizing: border-box;
+    font-size: 16px;
 }
+
+/* #region Navigation Bar */
+nav {
+    overflow: hidden;
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-bottom: 16px;
+}
+
+nav a {
+    float: left;
+    color: white;
+    background-color: #333;
+    padding: 16px;
+    margin: 0;
+    text-decoration: none;
+    transition-duration: 0.4s;
+}
+
+nav a:hover:not(.active) {
+    background-color: #191414;
+}
+
+.active {
+    background-color: #1DB954;
+}
+/* #endregion */
 
 p {
     width: fit-content;
@@ -9,19 +38,19 @@ p {
 .text {
     padding: 16px 32px;
     margin: 4px 2px;
-    font-size: 16px;
+    
     background-color: white;
     border: 2px solid #1DB954;
     border-radius: 10px;
 }
 
+/* #region Buttons */
 button {
     padding: 16px 32px;
     margin: 4px 2px;
     display: inline-block;
-    text-align: center;
     font-size: 16px;
-    color: black; 
+    color: #191414; 
     background-color: white;
     border: 2px solid #1DB954;
     border-radius: 10px;
@@ -32,6 +61,7 @@ button {
   button:hover {
     background-color: #1DB954;
 }
+/* #endregion */
 
 input[type=text] {
     padding: 16px 32px;

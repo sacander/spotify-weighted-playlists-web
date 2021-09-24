@@ -10,6 +10,12 @@
 </head>
 
 <body onload="countdownTimer()">
+
+    <nav>
+        <a href="index.html" class="active">Spotify App</a>
+        <a href="about.html">About</a>
+    </nav>
+
     <button type="button" onclick="app()">Run app.js</button>
     <button type="button" onclick="test()">Run test.js</button>
     <p></p>
@@ -22,7 +28,7 @@
     <label class="text" for="outputPlaylistUrl">Output Playlist URL:</label>
     <input type="text" id="outputPlaylistUrl" name="outputPlaylistUrl" size="75" value="https://open.spotify.com/playlist/02t2e2Gq1CS83tD65zAZxd?si=b260e3402a164ba5">
     <button type="button" onclick="getPlaylistId('output')">Submit</button>
-    <p class="text"><span>Output Playlist ID: </span><span id="outputPlaylistId"></span></p>
+    <p class="text">Output Playlist ID: <span id="outputPlaylistId"></span></p>
 
     <p id="accessTokenExpiresIn"></p>
 </body>
