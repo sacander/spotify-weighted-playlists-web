@@ -1,11 +1,11 @@
-//#region Global Constants
+// #region Global Constants
 const clientId="56c1bd9731fc4880988e268fe1e85eec"; // Spotify app client id
 const redirectUrl="http://localhost:8000/"; // Spotify app redirect url
 const scope = "playlist-modify-public playlist-modify-private"; // Scopes to access spotify api
 //#endregion
 
 
-//#region Sends or receives data to the Spotify Web API
+// #region Sends or receives data to the Spotify Web API
 async function spotify(accessToken, method, url, body=null, contentType=null) {
     const data = await fetch(url, {
         method: method,
@@ -27,7 +27,7 @@ async function spotify(accessToken, method, url, body=null, contentType=null) {
 //#endregion
 
 
-//#region Main function of file
+// #region Main function of file
 async function app(){ 
 
     if (window.location.hash.length == 0) { // Check if url has no #, used to check if this is a url returned from spotify
@@ -46,10 +46,10 @@ async function app(){
     }
 
 }
-//#endregion
+// #endregion
 
 
-//#region Authorization Flow - Implicit Grant
+// #region Authorization Flow - Implicit Grant
 // Returns url to authorize with spotify api
 function getAuthorizeUrl(clientId, redirectUrl, scope) {
     let authorizeUrl = "https://accounts.spotify.com/authorize";
@@ -84,7 +84,7 @@ function getAccessToken(location) {
 //#endregion
 
 
-//#region Import Data to Custom Track Object Array
+// #region Import Data to Custom Track Object Array
 // Track class for easy data management
 class Track {
     constructor(name, uri, album, artists) {
@@ -131,7 +131,7 @@ async function getPlaylistItems(accessToken, playlistId, next=null, trackArray=[
 //#endregion
 
 
-//#region Output Data to Playlist
+// #region Output Data to Playlist
 async function replacePlaylist(accessToken, playlistId, trackArray) {
     const url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
     const uriArray = {"uris": []};
@@ -146,7 +146,7 @@ async function replacePlaylist(accessToken, playlistId, trackArray) {
 //#endregion
 
 
-//#region Logic
+// #region Logic
 // Filters tracks by specific artist
 function filterByArtist(trackArray, artist) {
     return trackArray.filter(track => {
