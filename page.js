@@ -18,6 +18,16 @@ function onLoad() {
         tokenTimer();
     }
 
+    if (sessionStorage.getItem("inputPlaylistUrl")) {
+        document.getElementById("inputPlaylistUrl").innerHTML = sessionStorage.getItem("inputPlaylistUrl");
+        getPlaylistId("input");
+    }
+
+    if (sessionStorage.getItem("outputPlaylistUrl")) {
+        document.getElementById("outputPlaylistUrl").innerHTML = sessionStorage.getItem("outputPlaylistUrl");
+        getPlaylistId("output");
+    }
+
 }
 // #endregion
 
@@ -52,6 +62,7 @@ function tokenTimer() {
 // #region Takens text input of playlist url and converts it to playlist id
 function getPlaylistId(io) {
     let url = new URL(document.getElementById(io + "PlaylistUrl").innerHTML);
+    sessionStorage.setItem(io + "PlaylistUrl", url);
     url = url.pathname.replace("/playlist/", "");
     document.getElementById(io + "PlaylistId").innerHTML = url;
     checkAppButton();
