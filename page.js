@@ -17,7 +17,6 @@ function onLoad() {
     if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now()) { // If token exists and has not expired
         tokenTimer();
         document.getElementById("appButton").removeAttribute("disabled");
-        document.getElementById("testButton").removeAttribute("disabled");
     }
 
 }
@@ -42,7 +41,6 @@ function tokenTimer(){
 
         if (accessTokenExpiresIn <= 0) {
             document.getElementById("appButton").setAttribute("disabled", "");
-            document.getElementById("testButton").setAttribute("disabled", "");
             clearInterval(accessTokenCountdown);
         }
         
