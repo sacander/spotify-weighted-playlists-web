@@ -14,7 +14,7 @@ function onLoad() {
         sessionStorage.setItem("accessTokenRequested", "false"); // Remove token request
     }
 
-    if (sessionStorage.getItem("accessToken")) { // If token exists
+    if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now()) { // If token exists
         tokenTimer();
         document.getElementById("appButton").removeAttribute("disabled");
         document.getElementById("testButton").removeAttribute("disabled");
@@ -32,12 +32,22 @@ function tokenTimer(){
     let minutes = "";
     let seconds = "";
 
-    setInterval(function() {
+    let accessTokenCountdown = setInterval(function() {
         accessTokenExpirationDate = sessionStorage.getItem("accessTokenExpirationDate");
-        accessTokenExpiresIn = ( accessTokenExpirationDate - Date.now() ) / 1000; // Convert back from ms to s
-        minutes = String(Math.floor(accessTokenExpiresIn/60)).padStart(2, "0");
-        seconds = String(Math.floor(accessTokenExpiresIn%60)).padStart(2, "0");
-        document.getElementById("accessTokenExpiresIn").innerHTML = "Access token expires in " + minutes + ":" + seconds;
+        accessTokenExpiresIn = Math.floor((accessTokenExpirationDate - Date.now()) / 1000); // Convert back from ms to s
+
+        if (accessTokenExpiresIn >= 0) {
+            minutes = String(Math.floor(accessTokenExpiresIn/60)).padStart(2, "0");
+            seconds = String(Math.floor(accessTokenExpiresIn%60)).padStart(2, "0");
+            document.getElementById("accessTokenExpiresIn").innerHTML = "Access token expires in " + minutes + ":" + seconds;
+        }
+
+        if (accessTokenExpiresIn <= 0) {
+            document.getElementById("appButton").setAttribute("disabled", "");
+            document.getElementById("testButton").setAttribute("disabled", "");
+            clearInterval(accessTokenCountdown);
+        }
+        
     }, 1000);
 
 }
