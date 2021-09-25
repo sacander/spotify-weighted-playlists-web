@@ -16,7 +16,6 @@ function onLoad() {
 
     if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now()) { // If token exists and has not expired
         tokenTimer();
-        document.getElementById("appButton").removeAttribute("disabled");
     }
 
 }
@@ -24,7 +23,7 @@ function onLoad() {
 
 
 // #region Adds timer for when access token expires
-function tokenTimer(){
+function tokenTimer() {
 
     let accessTokenExpiresIn = 0;
     let accessTokenExpirationDate = new Date();
@@ -55,6 +54,20 @@ function getPlaylistId(io) {
     let url = new URL(document.getElementById(io + "PlaylistUrl").innerHTML);
     url = url.pathname.replace("/playlist/", "");
     document.getElementById(io + "PlaylistId").innerHTML = url;
+    checkAppButton();
+}
+// #endregion
+
+
+// #region Checks whether to disable or enable appButton
+function checkAppButton() {
+    if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now() && // If token exists and has not expired
+    document.getElementById("inputPlaylistId").innerHTML != "" && // If input playlist id has a value
+    document.getElementById("outputPlaylistId").innerHTML != "") { // If output playlist id has a value
+        document.getElementById("appButton").removeAttribute("disabled"); // Enable button
+    } else {
+        document.getElementById("appButton").setAttribute("disabled", ""); // Disable button
+    }
 }
 // #endregion
 
