@@ -9,7 +9,7 @@
     <script src="test.js"></script>
 </head>
 
-<body onload="countdownTimer()">
+<body onload="onLoad()">
 
     <!-- Navigation Bar -->
     <nav>
@@ -21,8 +21,9 @@
 
     <!-- Script Buttons -->
     <div>
-        <button type="button" onclick="app()" disabled>Run app.js</button>
-        <button type="button" onclick="test()">Run test.js</button>
+        <button id="accessTokenButton" type="button" onclick="accessToken()">Get Access Token</button>
+        <button id="appButton" type="button" onclick="app()" disabled>Run app.js</button>
+        <button id="testButton" type="button" onclick="test()" disabled>Run test.js</button>
     </div>
 
     <br>
@@ -31,7 +32,7 @@
     <div>
         <span class="border" style="display: inline-block;">
             Input Playlist URL: 
-            <span id="inputPlaylistUrl" style="outline: none;" contenteditable>https://open.spotify.com/playlist/0LYnjF9LhawqR5IypBuOIi?si=48b24fbfeeff4bcb</span>
+            <span id="inputPlaylistUrl" style="outline: none;" contenteditable>https://open.spotify.com/playlist/0EnEDDhDMRT4IQkzFKu0Kj?si=a715a7261cd34697</span>
         </span>
         <button type="button" onclick="getPlaylistId('input')">Submit</button>
 

@@ -1,10 +1,3 @@
-// #region Global Constants
-const clientId="56c1bd9731fc4880988e268fe1e85eec"; // Spotify app client id
-const redirectUrl="http://localhost:8000/"; // Spotify app redirect url
-const scope = "playlist-modify-public playlist-modify-private"; // Scopes to access spotify api
-//#endregion
-
-
 // #region Sends or receives data to the Spotify Web API
 async function spotify(accessToken, method, url, body=null, contentType=null) {
     const data = await fetch(url, {
@@ -29,60 +22,17 @@ async function spotify(accessToken, method, url, body=null, contentType=null) {
 
 // #region Main function of file
 async function app(){ 
-
-    if (window.location.hash.length == 0) { // Check if url has no #, used to check if this is a url returned from spotify
-
-        window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
-
-    } else {
         
-        const accessToken = getAccessToken(window.location);
-        let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
-        let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab");
-        let tracksByTaylorSwift = filterByArtist(tracks, "Taylor Swift");
-        y = weightedTrackArray([tracks, x], [5, 1]);
-        // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
-        console.log(tracksByTaylorSwift)
-
-    }
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+    let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
+    let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab");
+    let tracksByTaylorSwift = filterByArtist(tracks, "Taylor Swift");
+    y = weightedTrackArray([tracks, x], [5, 1]);
+    // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
+    console.log(tracksByTaylorSwift)
 
 }
 // #endregion
-
-
-// #region Authorization Flow - Implicit Grant
-// Returns url to authorize with spotify api
-function getAuthorizeUrl(clientId, redirectUrl, scope) {
-    let authorizeUrl = "https://accounts.spotify.com/authorize";
-    authorizeUrl += "?client_id=" + clientId;
-    authorizeUrl += "&response_type=" + "token";
-    authorizeUrl += "&redirect_uri=" + redirectUrl;
-
-    if (scope != null) {
-        authorizeUrl += "&scope=" + scope;
-    }
-
-    return authorizeUrl;
-}
-
-// Returns access token from spotify api returned url
-function getAccessToken(location) {
-    let accessToken = "";
-    let tokenType = "";
-
-    if (location.href.includes("access_token")) { // Check to ensure access token is in url
-        let urlHash = location.hash; // Gets hash segment of url
-        urlHash = urlHash.slice(1); // Removes hash from hash segment
-        const urlParams = new URLSearchParams(urlHash); // Creates url search parameters object
-        accessToken = urlParams.get("access_token"); // Gets access token parameter
-        tokenType = urlParams.get("token_type"); // Gets token type parameter
-    } else {
-        console.log("access_token was not found in: " + location);
-    }
-
-    return {accessToken, tokenType};
-}
-//#endregion
 
 
 // #region Import Data to Custom Track Object Array
