@@ -16,21 +16,49 @@
         <a href="about.html">About</a>
     </nav>
 
-    <button type="button" onclick="app()">Run app.js</button>
-    <button type="button" onclick="test()">Run test.js</button>
-    <p></p>
+    <br>
 
-    <label class="text" for="inputPlaylistUrl">Input Playlist URL:</label>
-    <input type="text" id="inputPlaylistUrl" name="inputPlaylistUrl" size="75" value="https://open.spotify.com/playlist/0LYnjF9LhawqR5IypBuOIi?si=48b24fbfeeff4bcb">
-    <button type="button" onclick="getPlaylistId('input')">Submit</button>
-    <p class="text">Input Playlist ID: <span id="inputPlaylistId"></span></p>
+    <div>
+        <button type="button" onclick="app()">Run app.js</button>
+        <button type="button" onclick="test()">Run test.js</button>
+    </div>
 
-    <label class="text" for="outputPlaylistUrl">Output Playlist URL:</label>
-    <input type="text" id="outputPlaylistUrl" name="outputPlaylistUrl" size="75" value="https://open.spotify.com/playlist/02t2e2Gq1CS83tD65zAZxd?si=b260e3402a164ba5">
-    <button type="button" onclick="getPlaylistId('output')">Submit</button>
-    <p class="text">Output Playlist ID: <span id="outputPlaylistId"></span></p>
+    <br>
+
+    <div>
+        <span class="border" style="display: inline-block;">
+            Input Playlist URL: 
+            <span id="inputPlaylistUrl" style="outline: none;" contenteditable>https://open.spotify.com/playlist/0LYnjF9LhawqR5IypBuOIi?si=48b24fbfeeff4bcb</span>
+        </span>
+        <button type="button" onclick="getPlaylistId('input')">Submit</button>
+
+        <br>
+
+        <span class="border" style="display: inline-block;">
+            Input Playlist ID: 
+            <span id="inputPlaylistId"></span>
+        </span>
+    </div>
+
+    <br>
+
+    <div>
+        <span class="border" style="display: inline-block;">
+            Output Playlist URL: 
+            <span id="outputPlaylistUrl" style="outline: none;" contenteditable>https://open.spotify.com/playlist/02t2e2Gq1CS83tD65zAZxd?si=b260e3402a164ba5</span>
+        </span>
+        <button type="button" onclick="getPlaylistId('output')">Submit</button>
+
+        <br>
+
+        <span class="border" style="display: inline-block;">
+            Output Playlist ID: 
+            <span id="outputPlaylistId"></span>
+        </span>
+    </div>
 
     <p id="accessTokenExpiresIn"></p>
+
 </body>
 
 </html>

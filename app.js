@@ -41,7 +41,8 @@ async function app(){
         let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab");
         let tracksByTaylorSwift = filterByArtist(tracks, "Taylor Swift");
         y = weightedTrackArray([tracks, x], [5, 1]);
-        replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
+        // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
+        console.log(tracksByTaylorSwift)
 
     }
 

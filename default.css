@@ -2,14 +2,13 @@
     font-family: "Verdana", "Arial", "sans-serif";
     box-sizing: border-box;
     font-size: 16px;
+    color: black;
 }
 
 /* #region Navigation Bar */
 nav {
     overflow: hidden;
-    margin-top: -8px;
-    margin-left: -8px;
-    margin-bottom: 16px;
+    margin: -8px -8px 4px;
 }
 
 nav a {
@@ -31,26 +30,10 @@ nav a:hover:not(.active) {
 }
 /* #endregion */
 
-p {
-    width: fit-content;
-}
-
-.text {
-    padding: 16px 32px;
-    margin: 4px 2px;
-    
-    background-color: white;
-    border: 2px solid #1DB954;
-    border-radius: 10px;
-}
-
 /* #region Buttons */
 button {
     padding: 16px 32px;
-    margin: 4px 2px;
-    display: inline-block;
-    font-size: 16px;
-    color: #191414; 
+    margin: 4px 0px;
     background-color: white;
     border: 2px solid #1DB954;
     border-radius: 10px;
@@ -63,15 +46,9 @@ button {
 }
 /* #endregion */
 
-input[type=text] {
+.border {
     padding: 16px 32px;
-    margin: 4px 2px;
-    display: inline-block;
-    text-align: center;
-    font-size: 16px;
-    background-color: white;
+    margin: 4px 0px;
     border: 2px solid #1DB954;
     border-radius: 10px;
-    outline: none;
-    cursor: text;
 }
