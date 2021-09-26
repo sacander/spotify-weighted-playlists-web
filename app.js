@@ -47,7 +47,7 @@ class Track {
 }
 
 // Returns array of custom track objects
-async function getPlaylistItems(accessToken, playlistId, next=null, trackArray=[]) { // Gets data with 100 track limit
+async function getPlaylistItems(accessToken, playlistId, next=null, trackArray=[]) { // Gets data bypassing 100 track limit
     let url = next; // Assigns url to next page of tracks
     if (url == null) {
         url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=next,items.track"; // Assigns url during first call of function
