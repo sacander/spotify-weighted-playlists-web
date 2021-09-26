@@ -12,11 +12,11 @@ nav {
 }
 
 nav a {
+    padding: 16px;
+    margin: 0;
     float: left;
     color: white;
     background-color: #333;
-    padding: 16px;
-    margin: 0;
     text-decoration: none;
     transition-duration: 0.4s;
 }
@@ -25,7 +25,7 @@ nav a:hover:not(.active) {
     background-color: #191414;
 }
 
-.active {
+nav .active {
     background-color: #1DB954;
 }
 /* #endregion */
@@ -59,3 +59,28 @@ button[disabled] {
     border: 2px solid lightgray;
     cursor: not-allowed;
 }
+
+/* #region Tabs */
+#tabs {
+    overflow: hidden;
+}
+
+#tabs button {
+    padding: 16px;
+    margin: 0;
+    float: left;
+    color: white;
+    background-color: grey;
+    border: none;
+    border-radius: 0;
+    transition-duration: 0.4s;
+}
+
+#tabs button:hover:not(.activetab) {
+    background-color: #333;
+}
+
+#tabs .activetab {
+    background-color: #333;
+}
+/* #endregion */

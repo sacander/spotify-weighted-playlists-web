@@ -121,3 +121,17 @@ function accessToken() {
     window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
 }
 //#endregion
+
+
+// #region Sets which tab is active
+function setActiveTab(buttonId) {
+    // console.log(document.getElementById("tabs").children)
+    for (let button of document.getElementById("tabs").children) {
+        if (button.id == buttonId) {
+            button.classList.add("activetab");
+        } else {
+            button.classList.remove("activetab");
+        }
+    }
+}
+// #endregion
