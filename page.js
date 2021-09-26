@@ -18,12 +18,12 @@ function onLoad() {
         tokenTimer();
     }
 
-    if (sessionStorage.getItem("inputPlaylistUrl")) {
+    if (sessionStorage.getItem("inputPlaylistUrl")) { // Autosave input data
         document.getElementById("inputPlaylistUrl").innerHTML = sessionStorage.getItem("inputPlaylistUrl");
         getPlaylistId("input");
     }
 
-    if (sessionStorage.getItem("outputPlaylistUrl")) {
+    if (sessionStorage.getItem("outputPlaylistUrl")) { // Autosave output data
         document.getElementById("outputPlaylistUrl").innerHTML = sessionStorage.getItem("outputPlaylistUrl");
         getPlaylistId("output");
     }
