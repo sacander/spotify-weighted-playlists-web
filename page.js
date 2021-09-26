@@ -129,8 +129,10 @@ function setActiveTab(buttonId) {
     for (let button of document.getElementById("tabs").children) {
         if (button.id == buttonId) {
             button.classList.add("activetab");
+            document.getElementById(button.id + "Div").removeAttribute("hidden");
         } else {
             button.classList.remove("activetab");
+            document.getElementById(button.id + "Div").setAttribute("hidden", "");
         }
     }
 }
