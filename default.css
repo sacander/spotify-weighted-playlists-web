@@ -30,6 +30,7 @@ nav .active {
 }
 /* #endregion */
 
+
 /* #region Buttons */
 button {
     padding: 16px 32px;
@@ -44,14 +45,6 @@ button {
   button:hover {
     background-color: #1DB954;
 }
-/* #endregion */
-
-.border {
-    padding: 16px 32px;
-    margin: 4px 0px;
-    border: 2px solid #1DB954;
-    border-radius: 10px;
-}
 
 button[disabled] {
     color: gray;
@@ -59,6 +52,8 @@ button[disabled] {
     border: 2px solid lightgray;
     cursor: not-allowed;
 }
+/* #endregion */
+
 
 /* #region Tabs */
 #tabs {
@@ -70,17 +65,31 @@ button[disabled] {
     margin: 0;
     float: left;
     color: white;
-    background-color: grey;
+    background-color: #333;
     border: none;
     border-radius: 0;
     transition-duration: 0.4s;
 }
 
-#tabs button:hover:not(.activetab) {
-    background-color: #333;
+#tabs button:hover:not(.activeTab):not([disabled]) {
+    background-color: #191414;
 }
 
-#tabs .activetab {
-    background-color: #333;
+#tabs .activeTab {
+    background-color: #1DB954;
+}
+
+#tabs button[disabled] {
+    color: gray;
+    background-color: lightgray;
+    cursor: not-allowed;
 }
 /* #endregion */
+
+
+.border {
+    padding: 16px 32px;
+    margin: 4px 0px;
+    border: 2px solid #1DB954;
+    border-radius: 10px;
+}

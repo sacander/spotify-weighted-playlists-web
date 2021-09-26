@@ -28,6 +28,9 @@ function onLoad() {
         getPlaylistId("output");
     }
 
+    checkTabs()
+    checkAppButton()
+
 }
 // #endregion
 
@@ -65,19 +68,28 @@ function getPlaylistId(io) {
     sessionStorage.setItem(io + "PlaylistUrl", url);
     url = url.pathname.replace("/playlist/", "");
     document.getElementById(io + "PlaylistId").innerHTML = url;
-    checkAppButton();
+    checkTabs();
 }
 // #endregion
 
 
-// #region Checks whether to disable or enable appButton
+// #region Check whether to disable or enable element
+// Checks whether to enable or disable app button
 function checkAppButton() {
-    if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now() && // If token exists and has not expired
-    document.getElementById("inputPlaylistId").innerHTML != "" && // If input playlist id has a value
-    document.getElementById("outputPlaylistId").innerHTML != "") { // If output playlist id has a value
+    if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now()) { // If token exists and has not expired
         document.getElementById("appButton").removeAttribute("disabled"); // Enable button
     } else {
         document.getElementById("appButton").setAttribute("disabled", ""); // Disable button
+    }
+}
+
+// Checks whether to enable or disable tabs
+function checkTabs() {
+    if (document.getElementById("inputPlaylistId").innerHTML != "" && // If input playlist id has a value
+    document.getElementById("outputPlaylistId").innerHTML != "") { // If output playlist id has a value)
+        for (let tab of document.getElementById("tabs").children) {
+            tab.removeAttribute("disabled");
+        }
     }
 }
 // #endregion
@@ -125,13 +137,12 @@ function accessToken() {
 
 // #region Sets which tab is active
 function setActiveTab(buttonId) {
-    // console.log(document.getElementById("tabs").children)
     for (let button of document.getElementById("tabs").children) {
         if (button.id == buttonId) {
-            button.classList.add("activetab");
+            button.classList.add("activeTab");
             document.getElementById(button.id + "Div").removeAttribute("hidden");
         } else {
-            button.classList.remove("activetab");
+            button.classList.remove("activeTab");
             document.getElementById(button.id + "Div").setAttribute("hidden", "");
         }
     }
