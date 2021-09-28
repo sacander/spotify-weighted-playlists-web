@@ -90,7 +90,7 @@ button[disabled] {
 
 /* #region Slider */
 .slider {
-    margin: 8px 0;
+    margin: 16px 0;
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
     width: 500px;
