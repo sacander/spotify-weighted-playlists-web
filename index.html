@@ -63,15 +63,22 @@
 
     <br>
 
+    <!-- Slider Template -->
+    <template id="sliderTemplate">
+        <div>
+            <input class="slider" type="range" min="0" max="100" value="1" oninput="this.nextElementSibling.innerHTML = this.value">
+            Value: <span>1</span>
+        </div>
+    </template>
+
     <!-- Tabs -->
     <div id="tabs">
         <button id="weightByArtist" onclick="setActiveTab('weightByArtist')" disabled>Weight By Artist</button>
         <button id="weightByTrack" onclick="setActiveTab('weightByTrack')" disabled>Weight By Track</button>
     </div>
-
+    
     <div id="weightByArtistDiv" hidden>
-        artist
-        <input class="slider" type="range" min="0" max="100" oninput="this.nextElementSibling.innerHTML = this.value"> Value: <span></span>
+        artists
     </div>
 
     <div id="weightByTrackDiv" hidden>
