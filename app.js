@@ -20,16 +20,40 @@ async function spotify(accessToken, method, url, body=null, contentType=null) {
 //#endregion
 
 
-// #region Main function of file
-async function app(){ 
+// #region Main functions of file
+let tracksByArtist = {};
+
+async function input(){ 
         
     const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
     let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
-    let x = await getPlaylistItems(accessToken, "29eVFm6KNSJnfUcRghmWab");
-    let tracksByTaylorSwift = filterByArtist(tracks, "Taylor Swift");
-    y = weightedTrackArray([tracks, x], [5, 1]);
-    // replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, y);
-    console.log(tracksByTaylorSwift)
+    for (let track of tracks) {
+        let artist = track.artists[0];
+        if (!(artist in tracksByArtist)) tracksByArtist[artist] = [];
+        tracksByArtist[artist].push(track);
+    }
+
+    document.getElementById("weightByArtistDiv").innerHTML = "";
+    for (let artist of Object.keys(tracksByArtist)) {
+        let clone = document.getElementById("sliderTemplate").content.cloneNode(true);
+        clone.childNodes[1].childNodes[1].innerHTML = artist;
+        weightByArtistDiv.appendChild(clone);
+    }
+
+}
+
+function output(){ 
+        
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+    let trackArrays = [], probabilityValues = [];
+    for (let slider of document.getElementById("weightByArtistDiv").children) {
+        if (slider.children[1].value != 0) {
+            probabilityValues.push(slider.children[1].value);
+            trackArrays.push(tracksByArtist[slider.children[0].innerHTML]);
+        }
+    }
+    let shuffled = weightedTrackArray(trackArrays, probabilityValues);
+    replacePlaylist(accessToken, document.getElementById("outputPlaylistId").innerHTML, shuffled);
 
 }
 // #endregion
@@ -141,7 +165,7 @@ function weightedTrackArray(trackArrays, probabilityValues) {
         for (let trackArray of trackArrays) { // Iterate through each track array
             if (random < trackArray.probability) { // If the random number is less than probability threshold
                 randomIndex = Math.floor(Math.random() * trackArray.length); // Get random number from 0 to length - 1
-                weightedTrackArray.push(...trackArray.splice(randomIndex, 1)); // Remove track object from track array and add it to outputt array
+                weightedTrackArray.push(...trackArray.splice(randomIndex, 1)); // Remove track object from track array and add it to output array
 
                 if (trackArray.length == 0) { // If track array is empty, make it as looped and reset it
                     trackArray.unlooped = false;

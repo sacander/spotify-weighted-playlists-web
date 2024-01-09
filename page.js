@@ -53,7 +53,8 @@ function tokenTimer() {
         document.getElementById("accessTokenExpiresIn").innerHTML = "Access token expires in " + minutes + ":" + seconds;
 
         if (accessTokenExpiresIn <= 0) {
-            document.getElementById("appButton").setAttribute("disabled", "");
+            document.getElementById("inputButton").setAttribute("disabled", "");
+            document.getElementById("outputButton").setAttribute("disabled", "");
             clearInterval(accessTokenCountdown);
         }
         
@@ -74,12 +75,14 @@ function getPlaylistId(io) {
 // #endregion
 
 
-// #region Checks whether to enable or disable app button
+// #region Checks whether to enable or disable app buttons
 function checkAppButton() {
     if (sessionStorage.getItem("accessTokenExpirationDate") > Date.now()) { // If token exists and has not expired
-        document.getElementById("appButton").removeAttribute("disabled"); // Enable button
+        document.getElementById("inputButton").removeAttribute("disabled"); // Enable buttons
+        document.getElementById("outputButton").removeAttribute("disabled");
     } else {
-        document.getElementById("appButton").setAttribute("disabled", ""); // Disable button
+        document.getElementById("inputButton").setAttribute("disabled", ""); // Disable buttons
+        document.getElementById("outputButton").setAttribute("disabled", "");
     }
 }
 // #endregion
@@ -119,9 +122,8 @@ function getAccessToken(location) {
 }
 
 function accessToken() {
-    console.log(redirectUrl);
-    // sessionStorage.setItem("accessTokenRequested", "true");
-    // window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
+    sessionStorage.setItem("accessTokenRequested", "true");
+    window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
 }
 //#endregion
 
