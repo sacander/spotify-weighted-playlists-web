@@ -24,7 +24,8 @@ async function spotify(accessToken, method, url, body=null, contentType=null) {
 let tracksByArtist = {};
 
 async function input(){ 
-        
+
+    tracksByArtist = {};
     const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
     let tracks = await getPlaylistItems(accessToken, document.getElementById("inputPlaylistId").innerHTML);
     for (let track of tracks) {
