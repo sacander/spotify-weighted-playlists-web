@@ -66,7 +66,7 @@ function tokenTimer() {
 
 // #region Takens text input of playlist url and converts it to playlist id
 function getPlaylistId(io) {
-    let url = new URL(document.getElementById(io + "PlaylistUrl").innerHTML);
+    let url = new URL(document.getElementById(io + "PlaylistUrl").value);
     sessionStorage.setItem(io + "PlaylistUrl", url);
     url = url.pathname.replace("/playlist/", "");
     document.getElementById(io + "PlaylistId").innerHTML = url;
