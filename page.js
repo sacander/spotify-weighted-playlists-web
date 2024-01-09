@@ -1,6 +1,7 @@
 // #region Global Constants
 const clientId="56c1bd9731fc4880988e268fe1e85eec"; // Spotify app client id
-const redirectUrl="https://zanderson004.github.io/spotify-weighted-playlists-web/"; // Spotify app redirect url
+// const redirectUrl="https://zanderson004.github.io/spotify-weighted-playlists-web/"; // Spotify app redirect url
+const redirectUrl="http://localhost:8000/"
 const scope = "playlist-modify-public playlist-modify-private"; // Scopes to access spotify api
 //#endregion
 
@@ -118,8 +119,9 @@ function getAccessToken(location) {
 }
 
 function accessToken() {
-    sessionStorage.setItem("accessTokenRequested", "true");
-    window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
+    console.log(redirectUrl);
+    // sessionStorage.setItem("accessTokenRequested", "true");
+    // window.location.href = getAuthorizeUrl(clientId, redirectUrl, scope); // Change url to authorize with spotify api
 }
 //#endregion
 
