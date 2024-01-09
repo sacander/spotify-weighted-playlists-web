@@ -1,5 +1,5 @@
 # spotify-weighted-playlists-web
-Web app that allows you to generate shuffled playlists where different artists have custom weightings. Try it out [here](https://zanderson004.github.io/spotify-weighted-playlists-web/).
+Web app that allows you to generate shuffled playlists where different artists have custom weightings. Requires an empty output playlist (current contents will be overwritten) that is filled as a result of the shuffle and can be listened to in order. Try it out [here](https://zanderson004.github.io/spotify-weighted-playlists-web/).
 
 Instructions:
 1. Click 'Get Access Token and sign in to Spotify.
