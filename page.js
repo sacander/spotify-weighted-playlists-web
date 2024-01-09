@@ -20,12 +20,12 @@ function onLoad() {
     }
 
     if (sessionStorage.getItem("inputPlaylistUrl")) { // Autosave input data
-        document.getElementById("inputPlaylistUrl").innerHTML = sessionStorage.getItem("inputPlaylistUrl");
+        document.getElementById("inputPlaylistUrl").value = sessionStorage.getItem("inputPlaylistUrl");
         getPlaylistId("input");
     }
 
     if (sessionStorage.getItem("outputPlaylistUrl")) { // Autosave output data
-        document.getElementById("outputPlaylistUrl").innerHTML = sessionStorage.getItem("outputPlaylistUrl");
+        document.getElementById("outputPlaylistUrl").value = sessionStorage.getItem("outputPlaylistUrl");
         getPlaylistId("output");
     }
 
